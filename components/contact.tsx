@@ -15,6 +15,7 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
   const ref = useRef(null)
+  const formRef = useRef<HTMLFormElement>(null)
   const isInView = useInView(ref, { once: true, amount: 0.1 })
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,20 +38,19 @@ export default function Contact() {
 
       if (response.ok) {
         toast({
-          title: "Message sent!",
+          title: "Message sent successfully!",
           description: "Thank you for your message. I'll get back to you soon.",
         })
-        e.currentTarget.reset()
+        formRef.current?.reset()
       } else {
         throw new Error(data.message || 'Failed to send message')
       }
-    } catch (error) {
+    } catch (error: any) {
       toast({
-        title: "Error sending message",
-        description: "Please try again later or contact me directly via email.",
+        title: "Error",
+        description: error.message || "Failed to send message. Please try again later.",
         variant: "destructive",
       })
-      console.error("Contact form error:", error)
     } finally {
       setIsSubmitting(false)
     }
@@ -115,7 +115,7 @@ export default function Contact() {
           <div className="lg:col-span-2">
             <Card className="bg-slate-950 border border-slate-800">
               <CardContent className="p-6">
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <label htmlFor="name" className="text-sm font-medium text-gray-300">

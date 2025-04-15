@@ -30,6 +30,7 @@ export default function About() {
 
           <div className="md:w-2/3">
             <p className="text-gray-300 text-lg mb-4">
+             Hii !!     I'm Abhishek Yadav, <br />
               Computer Engineering graduate with expertise in Java, Spring Boot, React.js, and MySQL. Passionate about
               software development, problem-solving, and learning new technologies.
             </p>
