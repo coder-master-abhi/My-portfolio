@@ -49,7 +49,10 @@ export default function Hero() {
       {/* Resume Modal */}
       {showResume && (
         <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50" onClick={() => setShowResume(false)}>
-          <div className="relative w-full h-full">
+          <div className="relative w-[80%] h-[100%] bg-white rounded-md overflow-hidden" onClick={(e) => e.stopPropagation()}>
+
+
+
             <button 
               className="absolute top-4 right-4 z-10 bg-blue-500 rounded-full p-1 text-white hover:bg-blue-600 transition-colors"
               onClick={(e) => {

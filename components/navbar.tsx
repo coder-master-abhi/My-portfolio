@@ -37,8 +37,8 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-between items-center">
-          <a href="#" className="text-2xl font-bold text-white">
-            Abhishek<span className="text-blue-500">.</span>
+          <a href="#" className="text-2xl font-bold text-blue-500">
+          <span className="text-white">&lt;</span> ÂßHÎ$HÈK <span className="text-white">/&gt;</span><span className="text-blue-500">.</span>
           </a>
 
           {/* Desktop Navigation */}
