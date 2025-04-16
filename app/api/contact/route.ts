@@ -5,6 +5,10 @@ export async function POST(req: Request) {
   try {
     const { name, email, message, subject } = await req.json();
 
+    if (!process.env.EMAIL_PASSWORD) {
+      throw new Error('EMAIL_PASSWORD environment variable is not set');
+    }
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -27,7 +31,7 @@ export async function POST(req: Request) {
         Message: ${message}
       `,
       html: `
-        <h3>New Message Form Portfolio</h3>
+        <h3> Message From Portfolio</h3>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Subject:</strong> ${subject || 'N/A'}</p>
@@ -35,16 +39,21 @@ export async function POST(req: Request) {
       `,
     };
 
-    await transporter.sendMail(mailOptions);
+    try {
+      await transporter.sendMail(mailOptions);
+    } catch (emailError: any) {
+      console.error('Nodemailer error:', emailError);
+      throw new Error(emailError.message || 'Failed to send email');
+    }
 
     return NextResponse.json(
       { message: 'Email sent successfully' },
       { status: 200 }
     );
-  } catch (error) {
-    console.error('Email error:', error);
+  } catch (error: any) {
+    console.error('API error:', error);
     return NextResponse.json(
-      { message: 'Failed to send email. Please try again later.' },
+      { message: error.message || 'Failed to send email. Please try again later.' },
       { status: 500 }
     );
   }
